@@ -1,6 +1,6 @@
 CREATE TABLE cards (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID REFERENCES groups(id) ON DELETE CASCADE,
+    group_id UUID REFERENCES groups(id) ON DELETE CASCADE,
     title VARCHAR(50) NOT NULL,
     main_info VARCHAR(50),
     color VARCHAR,
