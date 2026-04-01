@@ -23,6 +23,9 @@ public class User {
     private UUID id;
 
     @Column(nullable = false, length = 200)
+    private String name;
+
+    @Column(nullable = false, length = 200)
     private String username;
 
     @Column(name = "password_hash", nullable = false)

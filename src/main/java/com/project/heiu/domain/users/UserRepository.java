@@ -1,6 +1,5 @@
-package com.project.heiu.repository;
+package com.project.heiu.domain.users;
 
-import com.project.heiu.domain.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
