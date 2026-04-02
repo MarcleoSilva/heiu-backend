@@ -1,7 +1,7 @@
 package com.project.heiu.domain.users;
 
-import com.project.heiu.domain.users.dto.UserPrivateResponseDTO;
-import com.project.heiu.domain.users.dto.UserRequestDTO;
+import com.project.heiu.domain.users.dto.UserPrivateResponse;
+import com.project.heiu.domain.users.dto.UserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     // post
-    public UserPrivateResponseDTO register(UserRequestDTO request) {
+    public void register(UserRequest request) {
         if (userRepository.existsByUsername(request.username())) {
             throw new RuntimeException("Username already used");
         }
@@ -27,17 +27,15 @@ public class UserService {
         user.setUsername(request.username());
         user.setPasswordHash(passwordEncoder.encode(request.passwordHash()));
 
-        User saved = userRepository.save(user);
-
-        return new UserPrivateResponseDTO(saved.getName(), saved.getUsername(), saved.getCreatedAt());
+        userRepository.save(user);
     };
 
     // get
-    public UserPrivateResponseDTO findUser(UUID userId){
+    public UserPrivateResponse findUser(UUID userId){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return new UserPrivateResponseDTO(user.getName(), user.getUsername(), user.getCreatedAt());
+        return new UserPrivateResponse(user.getName(), user.getUsername(), user.getCreatedAt());
     }
 
     // delete
@@ -75,6 +73,7 @@ public class UserService {
 
         userRepository.save(user);
     }
+
 
 
 }

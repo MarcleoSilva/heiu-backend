@@ -1,5 +1,7 @@
 package com.project.heiu.domain.groups.dto;
 
+import com.project.heiu.domain.cards.Card;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +13,8 @@ public record GroupResponse(
         String color,
         List<String> tags,
         String photo,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        Integer cardAmount
 
 ) {
 }

@@ -5,6 +5,8 @@ import com.project.heiu.domain.users.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,6 +33,9 @@ public class Group {
     private String name;
     private String description;
     private String color;
+
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    @Column(name="tags", columnDefinition = "text[]")
     private List<String> tags;
     private String photo;
 
@@ -39,5 +44,7 @@ public class Group {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "group")
-    private Set<Card> card;
+    private List<Card> card;
+
+    private Integer cardAmount;
 }
