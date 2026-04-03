@@ -89,5 +89,23 @@ public class GroupService {
     }
 
     // update
+    public void editGroup(UUID userId, String name, String description, String color, List<String> tags, String photo, UUID groupId){
+        Group group = groupRepository.findByIdAndUserId(groupId, userId)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+
+        group.setUser(user);
+        group.setId(groupId);
+        group.setName(name);
+        group.setDescription(description);
+        group.setColor(color);
+        group.setTags(tags);
+        group.setPhoto(photo);
+
+        groupRepository.save(group);
+    };
 
 }
