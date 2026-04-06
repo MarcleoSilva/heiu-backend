@@ -10,6 +10,5 @@ public record GroupRequest(
         String color,
         List<String> tags,
         String photo
-
 ) {
 }

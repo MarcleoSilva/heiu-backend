@@ -15,6 +15,5 @@ public record GroupResponse(
         String photo,
         LocalDateTime createdAt,
         Integer cardAmount
-
 ) {
 }

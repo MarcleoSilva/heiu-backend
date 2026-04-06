@@ -28,7 +28,7 @@ public class UserService {
         user.setPasswordHash(passwordEncoder.encode(request.passwordHash()));
 
         userRepository.save(user);
-    };
+    }
 
     // get
     public UserPrivateResponse findUser(UUID userId){

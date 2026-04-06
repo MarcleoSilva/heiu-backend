@@ -32,7 +32,7 @@ public class GroupService {
     }
 
     //post
-    public void create(UUID userId, GroupRequest groupRequest) {
+    public void createGroup(UUID userId, GroupRequest groupRequest) {
         if (groupRepository.existsByNameAndUserId(groupRequest.name(), userId)){
             throw new RuntimeException("Group already exists");
         }
@@ -79,7 +79,7 @@ public class GroupService {
                 .orElseThrow(() -> new RuntimeException("Group not found"));
 
         return mapToResponse(group);
-    };
+    }
 
     public GroupResponse getGroupByName(String name, UUID userId){
         Group group = groupRepository.findByNameAndUserId(name, userId)
@@ -96,7 +96,6 @@ public class GroupService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-
         group.setUser(user);
         group.setId(groupId);
         group.setName(name);
@@ -106,6 +105,6 @@ public class GroupService {
         group.setPhoto(photo);
 
         groupRepository.save(group);
-    };
+    }
 
 }
