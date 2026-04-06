@@ -1,6 +1,7 @@
 package com.project.heiu.domain.cards;
 
 import com.project.heiu.domain.groups.Group;
+import com.project.heiu.domain.users.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,6 +22,10 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name="group_id")

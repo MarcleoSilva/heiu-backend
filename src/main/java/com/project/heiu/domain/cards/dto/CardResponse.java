@@ -13,7 +13,7 @@ public record CardResponse(
         String photo,
         String occupation,
         String description,
-        String age,
+        Integer age,
         String birthday,
         List<String> likes,
         List<String> dislikes,
