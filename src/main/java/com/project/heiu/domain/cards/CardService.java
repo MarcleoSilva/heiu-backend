@@ -4,7 +4,6 @@ import com.project.heiu.domain.cards.dto.CardRequest;
 import com.project.heiu.domain.cards.dto.CardResponse;
 import com.project.heiu.domain.groups.Group;
 import com.project.heiu.domain.groups.GroupRepository;
-import com.project.heiu.domain.groups.dto.GroupResponse;
 import com.project.heiu.domain.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,19 +30,7 @@ public class CardService {
         Card card = new Card();
 
         card.setGroup(group);
-        card.setTitle(cardRequest.title());
-        card.setMainInfo(cardRequest.mainInfo());
-        card.setColor(cardRequest.color());
-        card.setTags(cardRequest.tags());
-        card.setPhoto(cardRequest.photo());
-        card.setOccupation(cardRequest.occupation());
-        card.setDescription(cardRequest.description());
-        card.setAge(cardRequest.age());
-        card.setBirthday(cardRequest.birthday());
-        card.setLikes(cardRequest.likes());
-        card.setDislikes(cardRequest.dislikes());
-        card.setFamily(cardRequest.family());
-        card.setPets(cardRequest.pets());
+        updateCardFields(card, cardRequest);
 
         cardRepository.save(card);
     }
@@ -78,7 +65,7 @@ public class CardService {
 
     // get by group
     public List<CardResponse> listCardOfGroup(UUID userId, Group group){
-        return cardRepository.findAllByGroupAndUserId(group.getId(), userId)
+        return cardRepository.findAllByGroupIdAndUserId(group.getId(), userId)
                 .stream()
                 .map(card -> new CardResponse(
                         card.getId(),
@@ -103,7 +90,8 @@ public class CardService {
     // get one
     public CardResponse getCard(UUID userId, UUID cardId){
 
-        Card card = cardRepository.findByIdAndUserId(cardId, userId);
+        Card card = cardRepository.findByIdAndUserId(cardId, userId)
+                .orElseThrow(() -> new RuntimeException("Card not found"));
 
         return new CardResponse(
                 card.getId(),
@@ -122,6 +110,36 @@ public class CardService {
                 card.getPets(),
                 card.getCreatedAt()
         );
+    }
 
+    // update
+    public void editCard(UUID userId, UUID cardId, CardRequest cardRequest) {
+        if (!userRepository.existsById(userId)){
+            throw new RuntimeException("User not found");
+        }
+
+        Card card = cardRepository.findByIdAndUserId(cardId, userId)
+                .orElseThrow(()-> new RuntimeException("Card not found"));
+
+        updateCardFields(card, cardRequest);
+
+        cardRepository.save(card);
+
+    }
+
+    private void updateCardFields(Card card, CardRequest request) {
+        card.setTitle(request.title());
+        card.setMainInfo(request.mainInfo());
+        card.setColor(request.color());
+        card.setTags(request.tags());
+        card.setPhoto(request.photo());
+        card.setOccupation(request.occupation());
+        card.setDescription(request.description());
+        card.setAge(request.age());
+        card.setBirthday(request.birthday());
+        card.setLikes(request.likes());
+        card.setDislikes(request.dislikes());
+        card.setFamily(request.family());
+        card.setPets(request.pets());
     }
 }

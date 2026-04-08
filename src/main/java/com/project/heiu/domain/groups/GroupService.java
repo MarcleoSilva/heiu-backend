@@ -88,7 +88,7 @@ public class GroupService {
         return mapToResponse(group);
     }
 
-    // update
+    // update NEED TO FIX
     public void editGroup(UUID userId, String name, String description, String color, List<String> tags, String photo, UUID groupId){
         Group group = groupRepository.findByIdAndUserId(groupId, userId)
                 .orElseThrow(() -> new RuntimeException("Group not found"));
