@@ -1,5 +1,8 @@
 package com.project.heiu.domain.users;
 
+import com.project.heiu.configuration.JwtService;
+import com.project.heiu.domain.users.dto.LoginRequest;
+import com.project.heiu.domain.users.dto.LoginResponse;
 import com.project.heiu.domain.users.dto.UserPrivateResponse;
 import com.project.heiu.domain.users.dto.UserRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     // post
     public void register(UserRequest request) {
@@ -72,6 +76,20 @@ public class UserService {
         user.setPasswordHash(newPasswordHash);
 
         userRepository.save(user);
+    }
+
+    // login
+    public LoginResponse login(LoginRequest request) {
+        User user = userRepository.findByUsername(request.username())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(request.password(), user.getPasswordHash())) {
+            throw new RuntimeException("Invalid password");
+        }
+
+        String token = jwtService.generateToken(user);
+
+        return new LoginResponse(token);
     }
 
 
