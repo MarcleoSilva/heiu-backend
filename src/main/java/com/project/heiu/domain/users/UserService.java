@@ -29,7 +29,7 @@ public class UserService {
 
         user.setName(request.name());
         user.setUsername(request.username());
-        user.setPasswordHash(passwordEncoder.encode(request.passwordHash()));
+        user.setPassword(passwordEncoder.encode(request.password()));
 
         userRepository.save(user);
     }
@@ -57,8 +57,8 @@ public class UserService {
 
         String newPasswordHash = passwordEncoder.encode((newPassword));
 
-        if (passwordEncoder.matches(oldPassword, user.getPasswordHash())){
-            user.setPasswordHash(newPasswordHash);
+        if (passwordEncoder.matches(oldPassword, user.getPassword())){
+            user.setPassword(newPasswordHash);
         } else {
             throw new RuntimeException("Old password is incorrect");
         }
@@ -73,7 +73,7 @@ public class UserService {
 
         String newPasswordHash = passwordEncoder.encode((newPassword));
 
-        user.setPasswordHash(newPasswordHash);
+        user.setPassword(newPasswordHash);
 
         userRepository.save(user);
     }
@@ -83,7 +83,7 @@ public class UserService {
         User user = userRepository.findByUsername(request.username())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!passwordEncoder.matches(request.password(), user.getPasswordHash())) {
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
 

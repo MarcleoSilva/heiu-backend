@@ -29,7 +29,7 @@ public class User {
     private String username;
 
     @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
+    private String password;
 
     @CreationTimestamp
     @Column(name = "created_id", updatable = false)
