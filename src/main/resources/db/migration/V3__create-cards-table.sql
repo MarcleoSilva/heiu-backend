@@ -9,7 +9,7 @@ CREATE TABLE cards (
     photo VARCHAR,
     occupation VARCHAR,
     description VARCHAR,
-    age VARCHAR(3),
+    age INTEGER,
     birthday VARCHAR,
     likes VARCHAR[],
     dislikes VARCHAR[],

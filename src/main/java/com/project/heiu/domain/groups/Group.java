@@ -43,7 +43,7 @@ public class Group {
     @Column(name="created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Card> card;
 
     private Integer cardAmount;

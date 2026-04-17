@@ -37,10 +37,10 @@ public class User implements UserDetails {
     private String password;
 
     @CreationTimestamp
-    @Column(name = "created_id", updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Group> group;
 
     // user details
