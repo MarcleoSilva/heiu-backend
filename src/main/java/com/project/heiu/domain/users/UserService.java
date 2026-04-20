@@ -50,7 +50,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    // update
+    // patch
     public void changePassword(UUID userId,String oldPassword, String newPassword){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));

@@ -47,6 +47,7 @@ public class CardService {
                         card.getId(),
                         card.getTitle(),
                         card.getMainInfo(),
+                        card.getContact(),
                         card.getColor(),
                         card.getTags(),
                         card.getPhoto(),
@@ -71,6 +72,7 @@ public class CardService {
                         card.getId(),
                         card.getTitle(),
                         card.getMainInfo(),
+                        card.getContact(),
                         card.getColor(),
                         card.getTags(),
                         card.getPhoto(),
@@ -97,6 +99,7 @@ public class CardService {
                 card.getId(),
                 card.getTitle(),
                 card.getMainInfo(),
+                card.getContact(),
                 card.getColor(),
                 card.getTags(),
                 card.getPhoto(),
@@ -130,6 +133,7 @@ public class CardService {
     private void updateCardFields(Card card, CardRequest request) {
         card.setTitle(request.title());
         card.setMainInfo(request.mainInfo());
+        card.setContact(request.contact());
         card.setColor(request.color());
         card.setTags(request.tags());
         card.setPhoto(request.photo());

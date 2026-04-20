@@ -8,6 +8,7 @@ public record CardResponse(
         UUID id,
         String title,
         String mainInfo,
+        String contact,
         String color,
         List<String> tags,
         String photo,

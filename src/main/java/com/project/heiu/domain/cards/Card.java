@@ -34,6 +34,7 @@ public class Card {
     private String title;
     @Column(name="main_info")
     private String mainInfo;
+    private String contact;
     private String color;
     private List<String> tags;
     private String photo;

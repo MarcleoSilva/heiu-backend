@@ -9,6 +9,7 @@ public record CardRequest(
         @NotNull String title,
         UUID groupId,
         String mainInfo,
+        String contact,
         String color,
         List<String> tags,
         String photo,
