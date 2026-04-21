@@ -2,10 +2,12 @@ package com.project.heiu.domain.groups;
 
 import com.project.heiu.domain.groups.dto.GroupRequest;
 import com.project.heiu.domain.groups.dto.GroupResponse;
+import com.project.heiu.domain.groups.dto.GroupUpdate;
 import com.project.heiu.domain.users.User;
 import com.project.heiu.domain.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -88,23 +90,18 @@ public class GroupService {
         return mapToResponse(group);
     }
 
-    // update NEED TO FIX
-    public void editGroup(UUID userId, String name, String description, String color, List<String> tags, String photo, UUID groupId){
+    // update
+    @Transactional
+    public void editGroup(UUID userId, UUID groupId, GroupUpdate data) {
         Group group = groupRepository.findByIdAndUserId(groupId, userId)
-                .orElseThrow(() -> new RuntimeException("Group not found"));
+                .orElseThrow(() -> new RuntimeException("Group not found or unauthorized"));
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (data.name() != null) group.setName(data.name());
+        if (data.description() != null) group.setDescription(data.description());
+        if (data.color() != null) group.setColor(data.color());
+        if (data.tags() != null) group.setTags(data.tags());
+        if (data.photo() != null) group.setPhoto(data.photo());
 
-        group.setUser(user);
-        group.setId(groupId);
-        group.setName(name);
-        group.setDescription(description);
-        group.setColor(color);
-        group.setTags(tags);
-        group.setPhoto(photo);
-
-        groupRepository.save(group);
     }
 
 }

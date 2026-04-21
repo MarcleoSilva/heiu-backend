@@ -8,6 +8,7 @@ import com.project.heiu.domain.users.dto.UserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -51,6 +52,7 @@ public class UserService {
     }
 
     // patch
+    @Transactional
     public void changePassword(UUID userId,String oldPassword, String newPassword){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -62,8 +64,6 @@ public class UserService {
         } else {
             throw new RuntimeException("Old password is incorrect");
         }
-
-        userRepository.save(user);
 
     }
 
