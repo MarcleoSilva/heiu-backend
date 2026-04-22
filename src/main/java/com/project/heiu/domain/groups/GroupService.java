@@ -104,4 +104,11 @@ public class GroupService {
 
     }
 
+    // delete
+    public void delete(UUID userId, UUID groupId) {
+        Group group = groupRepository.findByIdAndUserId(groupId, userId)
+                .orElseThrow(() -> new RuntimeException("Group not found or unauthorized"));
+        groupRepository.delete(group);
+    }
+
 }
