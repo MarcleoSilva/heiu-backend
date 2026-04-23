@@ -8,8 +8,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CardRepository extends JpaRepository<Card, UUID> {
-    boolean existsByTitleAndUserId(String title, UUID userId);
+    boolean existsByTitleAndUserIdAndGroupId(String title, UUID userId, UUID groupId);
     List<Card> findAllByUserId(UUID userId);
+    Optional<Card> findByIdAndGroupIdAndUserId(UUID cardId, UUID groupId, UUID userId);
     List<Card> findAllByGroupIdAndUserId(UUID groupId, UUID userId);
+    List<Card> findAllByGroupId(UUID groupId);
     Optional<Card> findByIdAndUserId(UUID cardId, UUID userId);
+    boolean existsByTitleAndUserIdAndIdNotAndGroupId(String title, UUID userId, UUID cardId, UUID groupId);
 }
