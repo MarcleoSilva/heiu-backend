@@ -65,13 +65,6 @@ public class CardService {
                 .toList();
     }
 
-    // get by group
-    public List<CardResponse> listCardOfGroup(UUID userId, Group group){
-        return cardRepository.findAllByGroupIdAndUserId(group.getId(), userId)
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
-    }
 
     // get one
     public CardResponse getCard(UUID userId, UUID cardId, UUID groupId){
