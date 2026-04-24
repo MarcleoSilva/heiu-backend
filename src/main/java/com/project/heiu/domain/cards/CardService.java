@@ -111,9 +111,11 @@ public class CardService {
 
     }
     // delete
-    public void delete (UUID userId, UUID groupId, UUID cardId) {
+    public void delete(UUID userId, UUID groupId, UUID cardId) {
         Card card = cardRepository.findByIdAndGroupIdAndUserId(cardId, groupId, userId)
                 .orElseThrow(() -> new RuntimeException("Card not found"));
+
+        cardRepository.delete(card);
     }
 
 

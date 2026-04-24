@@ -7,6 +7,7 @@ import com.project.heiu.domain.groups.dto.GroupUpdate;
 import com.project.heiu.domain.users.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,10 @@ public class GroupController {
     private final GroupService groupService;
 
     @PostMapping
-    public ResponseEntity<String> createGroup(@AuthenticationPrincipal User user, @RequestBody @Valid GroupRequest request){
+    public ResponseEntity<Void> createGroup(@AuthenticationPrincipal User user, @RequestBody @Valid GroupRequest request){
 
         groupService.createGroup(user.getId(), request);
-        return ResponseEntity.ok("Group Created Successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
@@ -40,15 +41,15 @@ public class GroupController {
     }
 
     @PatchMapping("/{groupId}")
-    public ResponseEntity<String> editGroup(@AuthenticationPrincipal User user, @PathVariable UUID groupId, @RequestBody @Valid GroupUpdate request) {
+    public ResponseEntity<Void> editGroup(@AuthenticationPrincipal User user, @PathVariable UUID groupId, @RequestBody @Valid GroupUpdate request) {
         groupService.editGroup(user.getId(), groupId, request);
-        return ResponseEntity.ok("Group Edited Successfully");
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{groupId}")
-    public ResponseEntity<String> deleteGroup(@AuthenticationPrincipal User user, @PathVariable UUID groupId) {
+    public ResponseEntity<Void> deleteGroup(@AuthenticationPrincipal User user, @PathVariable UUID groupId) {
         groupService.delete(user.getId(), groupId);
-        return ResponseEntity.ok("Group Deleted Successfully");
+        return ResponseEntity.noContent().build();
     }
 
 }

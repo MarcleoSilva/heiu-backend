@@ -45,8 +45,17 @@ public class CardController {
     public ResponseEntity<Void> updateCard(@AuthenticationPrincipal User user, @PathVariable UUID cardId, @RequestBody @Valid CardUpdate request, @PathVariable UUID groupId){
 
         cardService.editCard(user.getId(), cardId, request, groupId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{cardId}")
+    public ResponseEntity<Void> deleteCard(@AuthenticationPrincipal User user, @PathVariable UUID groupId, @PathVariable UUID cardId){
+
+        cardService.delete(user.getId(), groupId, cardId);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }
